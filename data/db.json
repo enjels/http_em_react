@@ -1,0 +1,19 @@
+{
+  "products": [
+    {
+      "id": "51ca",
+      "name": "casa",
+      "price": "200.000"
+    },
+    {
+      "id": "1cd8",
+      "name": "cadeira",
+      "price": "50,00"
+    },
+    {
+      "id": "515b",
+      "name": "roupa de praia",
+      "price": "50,00"
+    }
+  ]
+}
