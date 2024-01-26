@@ -1,4 +1,4 @@
-# React + Vite
+# React + Vite, Json-server
 
 usado requisição (GET, POST)
 Projeto criado em react, usado json-server apra simular back end
