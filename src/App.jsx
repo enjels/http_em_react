@@ -4,11 +4,13 @@ const url = "http://localhost:3000/products";
 import "./App.css";
 
 function App() {
-  //1 - resgatando dados
+  //*1 - resgatando dados
+
   const [products, setProducts] = useState([]);
 
-  //4 - custom hook
-  const {data : items} = useFetch(url)
+  //*4 - custom hook
+
+  const {data : items, httpConfig} = useFetch(url)
 
   // useEffect(() => {
   //   async function getData() {
@@ -19,7 +21,8 @@ function App() {
   //   }
   //   getData();
   // }, []);
-  //2 - envio de dados
+
+  //* 2 - envio de dados
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -28,27 +31,37 @@ function App() {
 
     e.preventDefault();
 
+    //* 5 - refatorando post
+
     const product = {
       name,
       price,
-  }
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(product)
-    })
-    // 3 - carregamento dinamico
-    const addedProduct = await res.json()
-    setProducts((prevProducts) => [...prevProducts, addedProduct]);
-  }
+    }
+    httpConfig(product, "POST"); // Correção aqui - Usando o objeto 'product' em vez de 'products'
+
+    // Limpa os campos após o envio
+    setName("");
+    setPrice("");
+  };
+  //   const res = await fetch(url, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify(product)
+  //   })
+    //* 3 - carregamento dinamico
+
+  //   const addedProduct = await res.json()
+  //   setProducts((prevProducts) => [...prevProducts, addedProduct]);
+  
 
 
   return (
     <div>
       <h1>HTTP em React</h1>
       {/* 1 - resgate de dados */}
+
       <ul>
         {items && items.map((product) =>(
           <li key={product.id}>{product.name} - R${product.price}</li>
@@ -56,6 +69,7 @@ function App() {
         ))}
       </ul>
       {/* 2 - enviando dados */}
+
       <div className="add-product">
         <form onSubmit={handleSubmit}>
           <label>
