@@ -50,7 +50,7 @@ function App() {
       <h1>HTTP em React</h1>
       {/* 1 - resgate de dados */}
       <ul>
-        {items.map((product) =>(
+        {items && items.map((product) =>(
           <li key={product.id}>{product.name} - R${product.price}</li>
 
         ))}
