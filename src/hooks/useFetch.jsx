@@ -9,7 +9,11 @@ export const useFetch = (url) => {
     
   const [config, setConfig] = useState(null);
   const [method, setMethod] = useState(null);
-  const [callFetch, setCallFetch] = useState(null);
+    const [callFetch, setCallFetch] = useState(null);
+    
+    //*6 - loading
+    
+    const [loading,setLoading] = useState(false);
 
   const httpConfig = (data, method) => {
     setConfig({
@@ -23,25 +27,33 @@ export const useFetch = (url) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+      const fetchData = async () => {
+        
+          setLoading(true);
+          
       const res = await fetch(url);
-      const json = await res.json();
+          const json = await res.json();
+          setLoading(false)
       setData(json);
     };
     fetchData();
   }, [url, callFetch]);
-
+    
+    //*5 = refatorando post
+    
   useEffect(() => {
     const httpRequest = async () => {
       let json;
-      if (method === "POST") {
+        if (method === "POST") {
+          setLoading(true);
         let fetchOptions = [url, config];
         const res = await fetch(...fetchOptions);
-        json = await res.json();
+            json = await res.json();
+            setLoading(false)
       }
       setCallFetch(json);
     };
     httpRequest();
   }, [config, method, url]);
-  return { data, httpConfig };
+  return { data, httpConfig, loading };
 };
